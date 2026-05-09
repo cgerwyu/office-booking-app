@@ -1,29 +1,34 @@
 package ru.ald.officebooking.user.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 import java.util.UUID;
 
-@Data
 @Entity
 @Table(name="users", uniqueConstraints = {
-        @UniqueConstraint(name="uq_user_email", columnNames="email")
+        @UniqueConstraint(name="uq_email", columnNames="email")
 })
+@Getter
+@Setter
+@NoArgsConstructor
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    UUID id;
 
-    @Column(nullable=false, length=32)
+    @Column(nullable=false, length=64)
     String name;
 
-    @Column(nullable=false, length=64, unique = true)
+    @Column(nullable=false, length=255)
     String email;
 
-    @Column(nullable = false, length=128)
-    UUID password;
+    @Column(nullable = false, length=255)
+    String password;
 }

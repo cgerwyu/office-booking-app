@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16
+    container_name: officebooking-db
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}"
+
+  app:
+    build: .
+    container_name: officebooking-app
+    ports:
+      - "${APP_PORT}"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
