@@ -10,25 +10,28 @@ import lombok.AccessLevel;
 import java.util.UUID;
 
 @Entity
-@Table(name="users", uniqueConstraints = {
+@Table(
+    name="users",
+    uniqueConstraints = {
         @UniqueConstraint(name="uq_email", columnNames="email")
-})
+    }
+)
 @Getter
 @Setter
 @NoArgsConstructor
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     UUID id;
 
-    @Column(nullable=false, length=64)
+    @Column(nullable = false, length = 64)
     String name;
 
-    @Column(nullable=false, length=255)
+    @Column(nullable = false, length = 255)
     String email;
 
-    @Column(nullable = false, length=255)
+    @Column(nullable = false, length = 255)
     String password;
 }

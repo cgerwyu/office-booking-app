@@ -36,13 +36,15 @@ public class UserServiceImpl implements UserService {
         checkEmailIsAvailable(userEmail);
 
         User user = userMapper.userCreateDtoToEntity(userCreateRequestDto);
-        user.setPassword(passwordEncoder.encode(userCreateRequestDto.getPassword()));
+        user.setPassword(
+            passwordEncoder.encode(userCreateRequestDto.getPassword())
+        );
         User savedUser = userRepository.save(user);
-        UserResponseDto responseDto = userMapper.userToResponseDto(savedUser);
 
-        return responseDto;
+        return userMapper.userToResponseDto(savedUser);
     }
 
+    @Transactional(readOnly = true)
     public Page<UserResponseDto> getUsers(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
 
@@ -51,12 +53,11 @@ public class UserServiceImpl implements UserService {
         return usersPage.map(userMapper::userToResponseDto);
     }
 
+    @Transactional(readOnly = true)
     public UserResponseDto getById(UUID id) {
         User user = getUserIfExists(id);
 
-        UserResponseDto responseDto = userMapper.userToResponseDto(user);
-
-        return responseDto;
+        return userMapper.userToResponseDto(user);
     }
 
     @Transactional
@@ -69,8 +70,11 @@ public class UserServiceImpl implements UserService {
         }
         userMapper.updateUser(user, userUpdateRequestDto);
 
-        if (userUpdateRequestDto.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(userUpdateRequestDto.getPassword()));
+        String newPassword = userUpdateRequestDto.getPassword();
+        if (newPassword != null) {
+            user.setPassword(
+                passwordEncoder.encode(newPassword)
+            );
         }
 
         User savedUser = userRepository.save(user);
@@ -85,20 +89,21 @@ public class UserServiceImpl implements UserService {
     }
 
     private User getUserIfExists(UUID id) {
-        User user = userRepository.findById(id)
+        return userRepository.findById(id)
             .orElseThrow(() ->
                 new NotFoundException(
                     String.format("Пользователь с id = %s не найден", id)
                 )
             );
-
-        return user;
     }
 
     private void checkEmailIsAvailable(String email) {
         if (userRepository.existsByEmail(email)) {
             throw new UserAlreadyExistsException(
-                    String.format("Пользователь с почтой %s уже зарегистрирован.", email)
+                String.format(
+                    "Пользователь с почтой %s уже зарегистрирован.",
+                    email
+                )
             );
         }
     }

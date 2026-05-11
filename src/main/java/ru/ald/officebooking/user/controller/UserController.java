@@ -12,7 +12,7 @@ import ru.ald.officebooking.user.service.UserService;
 
 import java.util.UUID;
 
-import static ru.ald.officebooking.common.ApiPaths.ID_VARIABLE_PATH;
+import static ru.ald.officebooking.common.ApiPaths.ID_PATH;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,12 +34,12 @@ public class UserController {
         return userService.getUsers(page, size);
     }
 
-    @GetMapping(ID_VARIABLE_PATH)
+    @GetMapping(ID_PATH)
     public UserResponseDto getById(@PathVariable UUID id) {
         return userService.getById(id);
     }
 
-    @PatchMapping(ID_VARIABLE_PATH)
+    @PatchMapping(ID_PATH)
     public UserResponseDto updateUser(
             @PathVariable UUID id,
             @Valid @RequestBody UserUpdateRequestDto userUpdateRequestDto
@@ -47,7 +47,7 @@ public class UserController {
         return userService.updateUser(id, userUpdateRequestDto);
     }
 
-    @DeleteMapping(ID_VARIABLE_PATH)
+    @DeleteMapping(ID_PATH)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID id) {
         userService.deleteUser(id);
