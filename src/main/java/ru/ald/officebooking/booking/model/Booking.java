@@ -1,23 +1,36 @@
 package ru.ald.officebooking.booking.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import ru.ald.officebooking.user.model.User;
 
-@Data
+import ru.ald.officebooking.user.model.User;
+import ru.ald.officebooking.workspace.model.Workspace;
+
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name="bookings")
+@Table(name = "bookings")
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Booking {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     Long id;
 
-    @Column(nullable = false)
-    Integer time;
+    @Column(name = "starts_at", nullable = false)
+    LocalDateTime starsAt;
 
-    @Column(nullable = false)
-    User user;
+    @Column(name = "ends_at", nullable = false)
+    LocalDateTime endsAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "booker_id", nullable = false)
+    User booker;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workspace_id", nullable = false)
+    Workspace workspace;
+
 }

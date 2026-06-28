@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.ald.officebooking.exception.NotFoundException;
 import ru.ald.officebooking.exception.UserAlreadyExistsException;
-import ru.ald.officebooking.user.dto.UserCreateRequestDto;
+import ru.ald.officebooking.user.dto.UserDto;
 import ru.ald.officebooking.user.dto.UserResponseDto;
 import ru.ald.officebooking.user.dto.UserUpdateRequestDto;
 import ru.ald.officebooking.user.model.User;
@@ -30,14 +30,14 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserResponseDto createUser(UserCreateRequestDto userCreateRequestDto) {
-        String userEmail = userCreateRequestDto.getEmail();
+    public UserResponseDto createUser(UserDto userDto) {
+        String userEmail = userDto.getEmail();
 
         checkEmailIsAvailable(userEmail);
 
-        User user = userMapper.userCreateDtoToEntity(userCreateRequestDto);
+        User user = userMapper.userCreateDtoToEntity(userDto);
         user.setPassword(
-            passwordEncoder.encode(userCreateRequestDto.getPassword())
+            passwordEncoder.encode(userDto.getPassword())
         );
         User savedUser = userRepository.save(user);
 

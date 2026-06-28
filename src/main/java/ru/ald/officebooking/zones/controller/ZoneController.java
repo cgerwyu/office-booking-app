@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-import ru.ald.officebooking.zones.dto.CreateZoneRequestDto;
+import ru.ald.officebooking.zones.dto.ZoneDto;
 import ru.ald.officebooking.zones.dto.UpdateZoneRequestDto;
 import ru.ald.officebooking.zones.dto.ZoneResponseDto;
 import ru.ald.officebooking.zones.service.ZoneService;
@@ -24,9 +24,9 @@ public class ZoneController {
 
     @PostMapping("/new")
     public ZoneResponseDto createZone(
-            @Valid @RequestBody CreateZoneRequestDto createZoneRequestDto
+            @Valid @RequestBody ZoneDto zoneDto
     ) {
-        return zoneService.createZone(createZoneRequestDto);
+        return zoneService.createZone(zoneDto);
     }
 
     @GetMapping

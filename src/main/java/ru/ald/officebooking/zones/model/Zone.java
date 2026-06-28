@@ -1,27 +1,28 @@
 package ru.ald.officebooking.zones.model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "zones")
-@Getter
-@Setter
-@NoArgsConstructor
+@Table(
+    name = "zones",
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uq_zone_name", columnNames = "name")
+    }
+)
+@Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Zone {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    @Column(nullable = false, unique = true, length = 8)
+    @Column(nullable = false, unique = true)
     String name;
 
     @Column(nullable = false)
@@ -31,4 +32,5 @@ public class Zone {
         this.name = name;
         this.floor = floor;
     }
+
 }

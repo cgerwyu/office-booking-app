@@ -9,13 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.ald.officebooking.exception.AlreadyExistsException;
 import ru.ald.officebooking.exception.NotFoundException;
 import ru.ald.officebooking.exception.ValidationException;
-import ru.ald.officebooking.zones.dto.CreateZoneRequestDto;
+import ru.ald.officebooking.zones.dto.ZoneDto;
 import ru.ald.officebooking.zones.dto.UpdateZoneRequestDto;
 import ru.ald.officebooking.zones.dto.ZoneResponseDto;
 import ru.ald.officebooking.zones.mapper.ZoneMapper;
 import ru.ald.officebooking.zones.model.Zone;
 import ru.ald.officebooking.zones.repository.ZoneRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -26,15 +27,11 @@ public class ZoneServiceImpl implements ZoneService {
     private final ZoneMapper zoneMapper;
 
     @Transactional
-    public ZoneResponseDto createZone(CreateZoneRequestDto createZoneRequestDto) {
-        String zoneName = createZoneRequestDto.getName();
+    public ZoneResponseDto createZone(ZoneDto zoneDto) {
+        String zoneName = zoneDto.getName();
         checkZoneNameIsAvailable(zoneName);
 
-        Zone zone = new Zone(
-            zoneName,
-            createZoneRequestDto.getFloor()
-        );
-
+        Zone zone = zoneMapper.zoneDtoToEntity(zoneDto);
         Zone savedZone = zoneRepository.save(zone);
 
         return zoneMapper.toZoneResponseDto(savedZone);
@@ -54,6 +51,22 @@ public class ZoneServiceImpl implements ZoneService {
         Zone zone = getZoneIfExists(id);
 
         return zoneMapper.toZoneResponseDto(zone);
+    }
+
+    @Transactional(readOnly = true)
+    public String getZoneNameById(UUID id) {
+        Optional<String> optionalZoneName = zoneRepository.findZoneNameById(id);
+        String zoneName = optionalZoneName.orElseThrow(() ->
+            new NotFoundException(
+                String.format("Zone with id %s doesn't exist.", id)
+            )
+        );
+        return zoneName;
+    }
+
+    @Transactional(readOnly = true)
+    public Zone getZoneEntityById(UUID id) {
+       return getZoneIfExists(id);
     }
 
     @Transactional
@@ -101,7 +114,7 @@ public class ZoneServiceImpl implements ZoneService {
     private void checkZoneNameIsAvailable(String name) {
         if (zoneRepository.existsByName(name)) {
             throw new AlreadyExistsException(
-                    String.format("Зона с названием = %s уже существует.", name)
+                String.format("Зона с названием = %s уже существует.", name)
             );
         }
     }

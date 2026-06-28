@@ -1,7 +1,7 @@
 package ru.ald.officebooking.user.mapper;
 
 import org.springframework.stereotype.Component;
-import ru.ald.officebooking.user.dto.UserCreateRequestDto;
+import ru.ald.officebooking.user.dto.UserDto;
 import ru.ald.officebooking.user.dto.UserResponseDto;
 import ru.ald.officebooking.user.dto.UserUpdateRequestDto;
 import ru.ald.officebooking.user.model.User;
@@ -9,7 +9,7 @@ import ru.ald.officebooking.user.model.User;
 @Component
 public class UserMapper {
 
-    public User userCreateDtoToEntity(UserCreateRequestDto dto) {
+    public User userCreateDtoToEntity(UserDto dto) {
         User user = new User();
 
         user.setName(dto.getName());

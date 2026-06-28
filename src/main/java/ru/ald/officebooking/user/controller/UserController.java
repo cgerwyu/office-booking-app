@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.ald.officebooking.user.dto.UserCreateRequestDto;
+import ru.ald.officebooking.user.dto.UserDto;
 import ru.ald.officebooking.user.dto.UserResponseDto;
 import ru.ald.officebooking.user.dto.UserUpdateRequestDto;
 import ru.ald.officebooking.user.service.UserService;
@@ -22,8 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/new")
-    public UserResponseDto createUser(@Valid @RequestBody UserCreateRequestDto userCreateRequestDto) {
-        return userService.createUser(userCreateRequestDto);
+    public UserResponseDto createUser(@Valid @RequestBody UserDto dto) {
+        return userService.createUser(dto);
     }
 
     @GetMapping

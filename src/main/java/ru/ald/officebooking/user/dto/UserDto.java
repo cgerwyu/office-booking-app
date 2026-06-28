@@ -11,7 +11,7 @@ import jakarta.validation.constraints.Size;
 @Getter
 @Setter
 @FieldDefaults(level= AccessLevel.PRIVATE)
-public class UserCreateRequestDto {
+public class UserDto {
 
     @NotBlank
     @Size(max = 64)
