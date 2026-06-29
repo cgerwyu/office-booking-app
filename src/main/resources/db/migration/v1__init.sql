@@ -25,9 +25,7 @@ create table workspaces (
     capacity integer not null,
 
     constraint fk_workspaces_zone
-        foreign key (zone_id)
-            references zones(id)
-            on delete restrict,
+        foreign key (zone_id) references zones(id) on delete restrict,
 
     constraint uq_workspace_zone_row_label_desk_number
         unique (zone_id, row_label, desk_number),
@@ -59,14 +57,10 @@ create table bookings (
     workspace_id uuid not null,
 
     constraint fk_bookings_booker
-      foreign key (booker_id)
-          references users(id)
-          on delete restrict,
+      foreign key (booker_id) references users(id) on delete restrict,
 
     constraint fk_bookings_workspace
-      foreign key (workspace_id)
-          references workspaces(id)
-          on delete restrict,
+      foreign key (workspace_id) references workspaces(id) on delete restrict,
 
     constraint chk_booking_time
       check (ends_at > starts_at)
