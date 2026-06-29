@@ -12,7 +12,6 @@ public class WorkspaceMapper {
     public Workspace mapCreateWorkspaceDtoToEntity(CreateWorkspaceDto dto, Zone zone) {
         Workspace workspace = new Workspace();
 
-        workspace.setName(dto.getName());
         workspace.setZone(zone);
         workspace.setType(dto.getType());
         workspace.setRowLabel(dto.getRowLabel());

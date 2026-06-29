@@ -8,6 +8,7 @@ import ru.ald.officebooking.user.model.User;
 import ru.ald.officebooking.workspace.model.Workspace;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "bookings")
@@ -17,10 +18,10 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    Long id;
+    UUID id;
 
     @Column(name = "starts_at", nullable = false)
-    LocalDateTime starsAt;
+    LocalDateTime startsAt;
 
     @Column(name = "ends_at", nullable = false)
     LocalDateTime endsAt;
