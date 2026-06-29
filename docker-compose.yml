@@ -11,12 +11,12 @@ services:
 
   app:
     build: .
-    container_name: officebooking-app
-    ports:
-      - "${APP_PORT}"
     depends_on:
       - db
+    container_name: officebooking-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${DB_NAME}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${APP_PORT}"
