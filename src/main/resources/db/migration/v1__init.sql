@@ -20,7 +20,7 @@ create table workspaces (
     name varchar(255),
     zone_id uuid not null,
     type varchar(32) not null,
-    row_label varchar(255),
+    row_label varchar(1),
     desk_number integer,
     capacity integer not null,
 

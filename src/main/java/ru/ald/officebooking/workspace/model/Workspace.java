@@ -40,7 +40,7 @@ public class Workspace {
     @Column(name = "type", nullable = false)
     WorkspaceType type;
 
-    @Column(name = "row_label")
+    @Column(name = "row_label", length = 1)
     String rowLabel;
 
     @Column(name = "desk_number")
