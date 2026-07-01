@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import ru.ald.officebooking.user.dto.UserDto;
 import ru.ald.officebooking.user.dto.UserResponseDto;
 import ru.ald.officebooking.user.dto.UserUpdateRequestDto;
+import ru.ald.officebooking.user.model.User;
 
 import java.util.UUID;
 
@@ -13,7 +14,9 @@ public interface UserService {
 
     public Page<UserResponseDto> getUsers(int page, int size);
 
-    public UserResponseDto getById(UUID id);
+    public UserResponseDto getUserById(UUID id);
+
+    public User getUserEntityById(UUID id);
 
     public UserResponseDto updateUser(UUID id, UserUpdateRequestDto userUpdateRequestDto);
 

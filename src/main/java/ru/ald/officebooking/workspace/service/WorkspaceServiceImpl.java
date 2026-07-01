@@ -73,6 +73,12 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public Workspace getWorkspaceEntityById(UUID id) {
+        return getWorkspaceByIdIfExists(id);
+    }
+
+    @Override
     @Transactional
     public ResponseWorkspaceDto updateWorkspace(UUID id, UpdateWorkspaceDto dto) {
         Workspace workspace = getWorkspaceByIdIfExists(id);

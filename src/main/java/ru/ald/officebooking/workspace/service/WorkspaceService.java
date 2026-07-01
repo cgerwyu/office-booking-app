@@ -22,4 +22,6 @@ public interface WorkspaceService {
 
     public void deleteWorkspaceById(UUID id);
 
+    public Workspace getWorkspaceEntityById(UUID id);
+
 }

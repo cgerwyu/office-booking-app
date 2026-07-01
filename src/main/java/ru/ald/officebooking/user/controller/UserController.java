@@ -35,8 +35,8 @@ public class UserController {
     }
 
     @GetMapping(ID_PATH)
-    public UserResponseDto getById(@PathVariable UUID id) {
-        return userService.getById(id);
+    public UserResponseDto getUserById(@PathVariable UUID id) {
+        return userService.getUserById(id);
     }
 
     @PatchMapping(ID_PATH)

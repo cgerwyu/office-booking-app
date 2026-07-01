@@ -54,10 +54,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserResponseDto getById(UUID id) {
+    public UserResponseDto getUserById(UUID id) {
         User user = getUserIfExists(id);
 
         return userMapper.userToResponseDto(user);
+    }
+
+    @Transactional(readOnly = true)
+    public User getUserEntityById(UUID id) {
+        return getUserIfExists(id);
     }
 
     @Transactional
