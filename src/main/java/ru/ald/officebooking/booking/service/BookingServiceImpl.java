@@ -95,10 +95,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void validateDates(
-            LocalDateTime currStartsAt,
-            LocalDateTime currEndsAt,
-            LocalDateTime newStartsAt,
-            LocalDateTime newEndsAt) {
+            LocalDateTime currStartsAt, LocalDateTime currEndsAt,
+            LocalDateTime newStartsAt, LocalDateTime newEndsAt) {
         if (newStartsAt != null) {
             if (newEndsAt != null) {
                 if (newStartsAt.isAfter(newEndsAt) || newStartsAt.isEqual(newEndsAt)) {
